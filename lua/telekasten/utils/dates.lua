@@ -164,8 +164,18 @@ function M.calculate_dates(date, calendar_monday)
     dates.time24 = os.date(df.time24, time)
     dates.time12 = os.date(df.time12, time)
     dates.date = os.date(df.date, time)
+    local prevworkday = time - oneday
+    while os.date("*t", prevworkday).wday == 1 or os.date("*t", prevworkday).wday == 7 do
+      prevworkday = prevworkday - oneday
+    end
+    dates.prevworkday = os.date(df.date, prevworkday)
     dates.prevday = os.date(df.date, time - oneday)
     dates.nextday = os.date(df.date, time + oneday)
+    local nextworkday = time + oneday
+    while os.date("*t", nextworkday).wday == 1 or os.date("*t", nextworkday).wday == 7 do
+      nextworkday = nextworkday + oneday
+    end
+    dates.nextworkday = os.date(df.date, nextworkday)
     dates.week = os.date(df.week, time)
     dates.prevweek = os.date(df.week, time - oneweek)
     dates.nextweek = os.date(df.week, time + oneweek)
